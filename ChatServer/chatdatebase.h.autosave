@@ -1,0 +1,26 @@
+#ifndef CHATDATEBASE_H
+#define CHATDATEBASE_H
+
+#include <QObject>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
+
+class ChatDateBase : public QObject
+{
+    Q_OBJECT
+public:
+    explicit ChatDateBase(QObject *parent = nullptr);
+    ~ChatDateBase();
+    bool IsOpen();
+    bool createTables();
+
+signals:
+
+private:
+    QSqlDatabase chatDB;
+    bool opened;
+
+};
+
+#endif // CHATDATEBASE_H
