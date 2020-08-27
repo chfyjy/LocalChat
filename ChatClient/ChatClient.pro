@@ -16,24 +16,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    ../common/workthread.cpp \
-    chatsession.cpp \
+    ../common/ChatCtrl.cpp \
+    ../common/chatmsg.cpp \
+    chatdlg.cpp \
     logindialog.cpp \
     main.cpp \
     registerdialog.cpp \
+    userinfodlg.cpp \
     widget.cpp
 
 HEADERS += \
     ../common/ChatCtrl.h \
-    ../common/workthread.h \
-    chatsession.h \
+    ../common/chatmsg.h \
+    chatdlg.h \
     logindialog.h \
     registerdialog.h \
+    userinfodlg.h \
     widget.h
 
 FORMS += \
+    chatdlg.ui \
     logindialog.ui \
     registerdialog.ui \
+    userinfodlg.ui \
     widget.ui
 
 # Default rules for deployment.

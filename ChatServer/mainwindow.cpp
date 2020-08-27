@@ -10,8 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     chatdb = new ChatDataBase(this);
     qDebug() << chatdb->createTables() << chatdb->lastErrorString();
+    qDebug() << chatdb->getUserCount();
+    qDebug() << chatdb->getGroupCount();
     chatserver = new ChatServer(this);
-    ;
+
     if(!chatserver->listen(QHostAddress(QHostAddress::Any), ServerPort))
         qDebug() << "listen error";
     else

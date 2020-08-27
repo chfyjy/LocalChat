@@ -17,7 +17,8 @@ public:
 
 private slots:
     void on_RegisterPBtn_clicked();
-
+signals:
+    void needRegister();
 private:
     Ui::LoginDialog *ui;
 };

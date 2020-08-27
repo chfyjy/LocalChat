@@ -3,21 +3,30 @@
 #include <QHostAddress>
 
 ChatThread::ChatThread(int socketDescriptor, QObject *parent)
-    : WorkThread(parent), socketDescriptor(socketDescriptor)
+    : QThread(parent), socketDescriptor(socketDescriptor)
 {
-    startThread();
+    start();
+}
+
+void ChatThread::doReadyRead()
+{
+    qDebug() << socket->readAll();
+}
+
+void ChatThread::stopThread()
+{
+    quit();
+    qDebug() <<"quit";
+    wait();
+    qDebug() <<"wait";
 }
 
 void ChatThread::run()
 {
-    QTcpSocket socket;
-    socket.setSocketDescriptor(socketDescriptor);
-    qDebug() << socket.peerPort();
-    qDebug() << socket.peerAddress().toString();
-    int tmp = socket.write("test\n");
-    qDebug() << tmp;
-    while(!stop)
-    {
-    }
-    socket.close();
+    socket = new QTcpSocket(nullptr);
+    socket->setSocketDescriptor(socketDescriptor);
+    qDebug() << connect(socket, &QIODevice::readyRead, this, &ChatThread::doReadyRead, Qt::ConnectionType::QueuedConnection);
+    qDebug() << connect(socket,&QTcpSocket::disconnected, this, &ChatThread::stopThread, Qt::ConnectionType::QueuedConnection);
+    socket->write("test");
+    exec();
 }

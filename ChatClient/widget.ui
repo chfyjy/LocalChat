@@ -6,13 +6,105 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>300</width>
     <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>2</number>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="font">
+      <font>
+       <pointsize>28</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>LocalChat</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1">
+     <property name="spacing">
+      <number>3</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="UIDlabel">
+       <property name="text">
+        <string>00000</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="AddFriendPBtn">
+       <property name="text">
+        <string>加好友</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="AddGroupPBtn">
+       <property name="text">
+        <string>加群</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ChangeInfoPBtn">
+       <property name="text">
+        <string>修改资料</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="tabBarAutoHide">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="MsgTab">
+      <attribute name="title">
+       <string>消息</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="FriendTab">
+      <attribute name="title">
+       <string>好友</string>
+      </attribute>
+     </widget>
+     <widget class="QWidget" name="GroupTab">
+      <attribute name="title">
+       <string>群聊</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

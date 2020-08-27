@@ -15,5 +15,6 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_RegisterPBtn_clicked()
 {
-
+    emit needRegister();
+    ui->RegisterPBtn->setEnabled(false);
 }

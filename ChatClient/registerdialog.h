@@ -14,7 +14,13 @@ class RegisterDialog : public QDialog
 public:
     explicit RegisterDialog(QWidget *parent = nullptr);
     ~RegisterDialog();
-
+    QString nickname, pswd, key1, key2;
+private slots:
+    void on_RegisterPBtn_clicked();
+signals:
+    void canRegister();
+private:
+    bool couldRegister();
 private:
     Ui::RegisterDialog *ui;
 };

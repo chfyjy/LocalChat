@@ -1,10 +1,10 @@
 #ifndef CHATTHREAD_H
 #define CHATTHREAD_H
 
-#include "../common/workthread.h"
+#include <QThread>
 #include <QTcpSocket>
 
-class ChatThread : public WorkThread
+class ChatThread : public QThread
 {
     Q_OBJECT
 public:
@@ -13,11 +13,13 @@ public:
 
 signals:
     void error(QTcpSocket::SocketError socketError);
+private slots:
+    void doReadyRead();
+    void stopThread();
 
 private:
     int socketDescriptor;
-    int port;
-    QString ip;
+    QTcpSocket *socket;
 };
 
 #endif // CHATTHREAD_H

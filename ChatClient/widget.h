@@ -18,10 +18,16 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+private slots:
+    void satrtRegister();
+    void doRegister();
+    void doReadyRead();
+private:
+    void initSocket();
 private:
     Ui::Widget *ui;
     LoginDialog *loginDlg;
     RegisterDialog *registerDlg;
-    ChatSession *chatsession;
+    QTcpSocket *socket;
 };
 #endif // WIDGET_H
