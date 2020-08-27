@@ -4,7 +4,9 @@
 #include <QWidget>
 #include <logindialog.h>
 #include <registerdialog.h>
-#include <chatsession.h>
+#include <QTcpSocket>
+#include "../common/chatmsg.h"
+#include "../common/ChatCtrl.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -24,6 +26,7 @@ private slots:
     void doReadyRead();
 private:
     void initSocket();
+    void writeMsg(ChatMsg msg);
 private:
     Ui::Widget *ui;
     LoginDialog *loginDlg;

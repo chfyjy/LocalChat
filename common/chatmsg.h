@@ -20,7 +20,6 @@ const QString Content = "content";
 const QString Msgtype = "msgtype";
 const QString Packnum = "packnum";
 const QString Packseq = "packseq";
-const QString SEPARATOR = "***";
 
 class subChatMsg
 {
@@ -32,9 +31,9 @@ public:
     subChatMsg(const QString& _msgid, const QString& _sendid, const QString& _recvid,
                const QString& _sendtime, const QString& _recvtime, const QString& _content,
                MsgType _msgtype, int _packnum, int _packseq);
-private:
-    QString msgid   ,//消息id
-            sendid  ,//发送id
+    bool isLastSub();
+    QString msgid   ;//消息id
+    QString sendid  ,//发送id
             recvid  ,//接收id
             sendtime,//发送时间
             recvtime,//接收时间
@@ -55,14 +54,15 @@ public:
     ChatMsg(const QList<subChatMsg>& scmsgs);
     void addSubChatMsg(const subChatMsg& scmsg);
     QList<QJsonDocument> toJsonDocument();
+    void setSubContent(const QString& content, int subat);
 
     QString msgid   ,         //消息id
             sendid  ,        //发送id
             recvid  ,        //接收id
             sendtime,      //发送时间
             recvtime;      //接收时间
+    MsgType msgtype ;//消息类型
 private:
     QList<subChatMsg> subpacks;
-    MsgType msgtype ;//消息类型
 };
 #endif // CHATMSG_H

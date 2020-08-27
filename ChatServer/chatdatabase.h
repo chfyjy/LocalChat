@@ -14,6 +14,7 @@ public:
     explicit ChatDataBase(QObject *parent = nullptr);
     ~ChatDataBase();
     bool IsOpen();
+    void close();
     bool createTables();
     QString lastErrorString();
     int getUserCount();

@@ -17,6 +17,11 @@ ChatDataBase::~ChatDataBase()
     opened = false;
 }
 
+void ChatDataBase::close()
+{
+    chatDB.close();
+}
+
 bool ChatDataBase::IsOpen()
 {
     return  opened;

@@ -42,6 +42,11 @@ subChatMsg::subChatMsg(const QJsonObject& jsonobj)
     packseq  = jsonobj.value(Packseq ).toInt();
 }
 
+bool subChatMsg::isLastSub()
+{
+    return  (packnum == packseq);
+}
+
 subChatMsg::subChatMsg(const QString& _msgid, const QString& _sendid, const QString& _recvid,
            const QString& _sendtime, const QString& _recvtime, const QString& _content,
            MsgType _msgtype, int _packnum, int _packseq):
@@ -62,16 +67,31 @@ ChatMsg::ChatMsg(const subChatMsg& scmsg)
 {
     subpacks.clear();
     subpacks << scmsg;
+    msgid    = scmsg.msgid;
+    sendid   = scmsg.sendid;
+    recvid   = scmsg.recvid;
+    sendtime = scmsg.sendtime;
+    recvtime = scmsg.recvtime;
 }
 
 ChatMsg::ChatMsg(const QList<subChatMsg>& scmsgs)
 {
     subpacks = scmsgs;
+    msgid    = scmsgs[0].msgid;
+    sendid   = scmsgs[0].sendid;
+    recvid   = scmsgs[0].recvid;
+    sendtime = scmsgs[0].sendtime;
+    recvtime = scmsgs[0].recvtime;
 }
 
 void ChatMsg::addSubChatMsg(const subChatMsg& scmsg)
 {
     subpacks << scmsg;
+}
+
+void ChatMsg::setSubContent(const QString& content, int subat)
+{
+    subpacks[subat].content = content;
 }
 
 QList<QJsonDocument> ChatMsg::toJsonDocument()

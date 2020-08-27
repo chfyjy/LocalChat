@@ -1,6 +1,5 @@
 #include "widget.h"
 #include "ui_widget.h"
-#include "../common/chatmsg.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -28,6 +27,17 @@ void Widget::doReadyRead()
     qDebug() << socket->readAll();
     qDebug() << "";
 }
+
+void Widget::writeMsg(ChatMsg msg)
+{
+    QList<QJsonDocument> doclist = msg.toJsonDocument();
+    int count = doclist.count();
+    if(count < 1)
+        return;
+    for(int i = 0; i <  count; i++)
+        socket->write(doclist[i].toJson());
+}
+
 void Widget::initSocket()
 {
     socket = new QTcpSocket(nullptr);
@@ -42,10 +52,11 @@ void Widget::doRegister()
     qDebug() << registerDlg->pswd;
     qDebug() << registerDlg->key1;
     qDebug() << registerDlg->key2;
-    QString mid = MsgID("");
-    QString content = initRegisterContent(registerDlg->nickname, registerDlg->pswd, registerDlg->key1, registerDlg->key2);
+    QString mid = MsgID();
+    QString content = RegisterInfo(registerDlg->nickname, registerDlg->pswd, registerDlg->key1, registerDlg->key2).toRegisterStr();
     ChatMsg registerMsg = ChatMsg(subChatMsg(mid, UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1));
-    qDebug() <<  socket->write(registerMsg.toJsonDocument().toJson());
+    writeMsg(registerMsg);
+    //qDebug() <<  socket->write(registerMsg.toJsonDocument().toJson());
 }
 
 void Widget::satrtRegister()

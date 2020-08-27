@@ -9,13 +9,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     chatdb = new ChatDataBase(this);
-    qDebug() << chatdb->createTables() << chatdb->lastErrorString();
-    qDebug() << chatdb->getUserCount();
-    qDebug() << chatdb->getGroupCount();
+    if(!chatdb->createTables())
+    {
+        qDebug() << chatdb->lastErrorString();
+        exit(0);
+    }
+    chatdb->deleteLater();
+
     chatserver = new ChatServer(this);
 
     if(!chatserver->listen(QHostAddress(QHostAddress::Any), ServerPort))
+    {
         qDebug() << "listen error";
+        exit(0);
+    }
     else
         qDebug() << "listened";
 
@@ -24,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     chatserver->deleteLater();
-    chatdb->deleteLater();
     delete ui;
 }
 
