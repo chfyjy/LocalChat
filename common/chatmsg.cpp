@@ -11,6 +11,7 @@ ChatMsg::ChatMsg()
     msgtype =ERRTYPE;
     packnum =0;
     packseq =0;
+    ok = false;
 }
 
 QJsonDocument ChatMsg::toJsonDocument()
@@ -25,6 +26,7 @@ QJsonDocument ChatMsg::toJsonDocument()
     jsonobj.insert(Msgtype ,QJsonValue((int)msgtype ));
     jsonobj.insert(Packnum ,QJsonValue(packnum ));
     jsonobj.insert(Packseq ,QJsonValue(packseq ));
+    jsonobj.insert(okstr, QJsonValue(ok));
 
     return QJsonDocument(jsonobj);
 }
@@ -40,6 +42,7 @@ ChatMsg::ChatMsg(const QJsonObject& jsonobj)
     msgtype  = (MsgType)jsonobj.value(Msgtype ).toInt();
     packnum  = jsonobj.value(Packnum ).toInt();
     packseq  = jsonobj.value(Packseq ).toInt();
+    ok = jsonobj.value(okstr).toBool();
 }
 
 bool ChatMsg::isLastSub()

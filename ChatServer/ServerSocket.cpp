@@ -18,13 +18,16 @@ void ServerSocket::receiveMessage()
 {
     QJsonParseError error;
     QJsonDocument jsondoc = QJsonDocument::fromJson(readAll(), &error);
-    ChatMsg submsg = ChatMsg(jsondoc.object());
+    //ChatMsg msg = ChatMsg(jsondoc.object());
+    MessageHandling(ChatMsg(jsondoc.object()));
 }
 
 void ServerSocket::writeMsg(ChatMsg msg)
 {
-    qDebug() << msg.toJsonDocument().toJson();
     write(msg.toJsonDocument().toJson());
+    waitForBytesWritten();
+    flush();
+    qDebug() << msg.toJsonDocument().toJson();
 }
 
 bool ServerSocket::doRegister(ChatMsg msg)
@@ -41,11 +44,13 @@ bool ServerSocket::doRegister(ChatMsg msg)
         else
             msg.content ="注册失败:"+chatdb->lastErrorString();
     }
+    qDebug() << msg.content;
     msg.msgid = MsgID();
     msg.recvid = account;
     qDebug() << msg.recvid;
     msg.sendid = ServerID;
     userid = account;
+    msg.ok = true;
     writeMsg(msg);
     return  ok;
 }

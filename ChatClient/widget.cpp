@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include <QMessageBox>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -9,6 +10,7 @@ Widget::Widget(QWidget *parent)
     initSocket();
     loginDlg = new LoginDialog(this);
     qDebug() << connect(loginDlg, &LoginDialog::needRegister, this, &Widget::satrtRegister);
+    qDebug() << connect(loginDlg, &LoginDialog::needLogin, this, &Widget::satrtRegister);
     loginDlg->exec();
 }
 
@@ -24,8 +26,40 @@ Widget::~Widget()
 
 void Widget::receiveMessage()
 {
-    qDebug() << socket->readAll();
-    qDebug() << "";
+    QJsonParseError error;
+    QJsonDocument jsondoc = QJsonDocument::fromJson(socket->readAll(), &error);
+    ChatMsg msg = ChatMsg(jsondoc.object());
+    qDebug() << msg.content;
+    MessageHandling(msg);
+}
+
+void Widget::registerHandle(ChatMsg msg)
+{
+    registerDlg->deleteLater();
+    if(msg.ok != true)
+        return;
+    QMessageBox::information(this, "register", msg.content);
+    loginDlg->doRegisterDone();
+}
+
+void Widget::MessageHandling(ChatMsg msg)
+{
+    switch (msg.msgtype)
+    {
+    case MsgType::REGISTER:registerHandle(msg);break;
+    case MsgType::FINDPSWD:break;
+    case MsgType::USERINFO:break;
+    case MsgType::TEXTMSG :break;
+    case MsgType::FILEMSG :break;
+    case MsgType::FRIENDA :break;
+    case MsgType::FRIENDF :break;
+    case MsgType::FRIENDD :break;
+    case MsgType::GROUPA  :break;
+    case MsgType::GROUPC  :break;
+    case MsgType::GROUPE  :break;
+    case MsgType::GROUPF  :break;
+    case MsgType::ERRTYPE :break;
+    }
 }
 
 void Widget::writeMsg(ChatMsg msg)
@@ -44,13 +78,10 @@ void Widget::initSocket()
 
 void Widget::doRegister()
 {
-    qDebug() << registerDlg->nickname;
-    qDebug() << registerDlg->pswd;
-    qDebug() << registerDlg->key1;
-    qDebug() << registerDlg->key2;
     QString mid = MsgID();
     QString content = RegisterInfo(registerDlg->nickname, registerDlg->pswd, registerDlg->key1, registerDlg->key2).toRegisterStr();
     ChatMsg registerMsg = ChatMsg(mid, UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1);
+    registerMsg.ok = false;
     writeMsg(registerMsg);
 }
 

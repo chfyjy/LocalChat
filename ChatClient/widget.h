@@ -19,7 +19,6 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
-
 private slots:
     void satrtRegister();
     void doRegister();
@@ -27,6 +26,8 @@ private slots:
 private:
     void initSocket();
     void writeMsg(ChatMsg msg);
+    void MessageHandling(ChatMsg msg);
+    void registerHandle(ChatMsg msg);
 private:
     Ui::Widget *ui;
     LoginDialog *loginDlg;

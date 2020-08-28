@@ -20,6 +20,7 @@ const QString Content = "content";
 const QString Msgtype = "msgtype";
 const QString Packnum = "packnum";
 const QString Packseq = "packseq";
+const QString okstr = "ok";
 
 class ChatMsg
 {
@@ -41,6 +42,7 @@ public:
     MsgType msgtype ;//消息类型
     int     packnum , //消息分包数 大于1
             packseq ; //消息包序号 自1开始
+    bool ok;
 };
 
 #endif // CHATMSG_H

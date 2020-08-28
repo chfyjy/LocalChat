@@ -20,6 +20,5 @@ void ChatThread::run()
     socket = new ServerSocket(nullptr);
     socket->setSocketDescriptor(socketDescriptor);
     qDebug() << connect(socket,&QTcpSocket::disconnected, this, &ChatThread::stopThread, Qt::ConnectionType::QueuedConnection);
-    socket->write("test");
     exec();
 }

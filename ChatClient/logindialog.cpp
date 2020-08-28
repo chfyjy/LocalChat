@@ -1,5 +1,6 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
+#include <QDebug>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,5 +17,16 @@ LoginDialog::~LoginDialog()
 void LoginDialog::on_RegisterPBtn_clicked()
 {
     emit needRegister();
-    ui->RegisterPBtn->setEnabled(false);
+    //ui->RegisterPBtn->setEnabled(false);
+}
+
+void LoginDialog::doRegisterDone()
+{
+    //ui->RegisterPBtn->setEnabled(true);
+    qDebug() << "ui->RegisterPBtn->setEnabled(true);";
+}
+
+void LoginDialog::on_LoginPBtn_clicked()
+{
+
 }
