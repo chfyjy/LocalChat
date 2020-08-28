@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     ../common/ChatCtrl.cpp \
     ../common/chatmsg.cpp \
+    ServerSocket.cpp \
     chatdatabase.cpp \
     chatserver.cpp \
     chatthread.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     ../common/ChatCtrl.h \
     ../common/chatmsg.h \
+    ServerSocket.h \
     chatdatabase.h \
     chatserver.h \
     chatthread.h \

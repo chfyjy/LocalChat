@@ -9,7 +9,7 @@ ChatServer::ChatServer(QObject *parent): QTcpServer(parent)
 void ChatServer::incomingConnection(qintptr socketDescriptor)
 {
     qDebug() << "incomingConnection";
-    ChatThread *thread = new ChatThread(socketDescriptor, this);
+    ChatThread *thread = new ChatThread(socketDescriptor, nullptr);
     connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
     thread->start();
 }

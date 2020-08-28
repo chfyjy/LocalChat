@@ -5,8 +5,11 @@
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
+#include "../common/ChatCtrl.h"
+
 const QString userCountSql = "SELECT COUNT(userid) FROM userLogin";
 const QString groupCountSql = "SELECT COUNT(DISTINCT groupid) FROM chatgroup";
+
 class ChatDataBase : public QObject
 {
     Q_OBJECT
@@ -19,10 +22,13 @@ public:
     QString lastErrorString();
     int getUserCount();
     int getGroupCount();
-    int getCount(const QString& countQuerySql);
+    bool registerAccount(const QString& registerSQL);
 
 
 signals:
+private:
+    int getCount(const QString& countQuerySql);
+    bool execSQL(const QString&);
 
 private:
     QSqlDatabase chatDB;

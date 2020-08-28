@@ -15,11 +15,13 @@ class RegisterInfo
 {
 public:
     RegisterInfo(const QString& name, const QString& pwd,
-                 const QString& k1,const QString& k2);
+                 const QString& k1,const QString& k2, const QString& uid=UnregisteredID);
     QString toRegisterStr();
-    RegisterInfo(const QString& registerStr);
+    RegisterInfo(const QString& registerStr, const QString& uid=UnregisteredID);
+    QString toRegisterSQL();
 private:
     QString uname,
+            userid,
             pswd,
             key1,
             key2;

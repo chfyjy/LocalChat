@@ -3,8 +3,8 @@
 
 #include <QThread>
 #include <QTcpSocket>
-#include <../common/chatmsg.h>
 #include <chatdatabase.h>
+#include <ServerSocket.h>
 
 class ChatThread : public QThread
 {
@@ -17,19 +17,11 @@ public:
 signals:
     void error(QTcpSocket::SocketError socketError);
 private slots:
-    void doReadyRead();
     void stopThread();
 
 private:
-    void MessageHandling(ChatMsg msg, int index);
-    void MessageHandling(const QString& msgid);
-    void MessageReorganization(subChatMsg submsg);
-    int Msgat(const QString& msgid);
-private:
     int socketDescriptor;
-    QTcpSocket *socket;
-    QList<ChatMsg> msglist;
-    ChatDataBase *chatdb;
+    ServerSocket *socket;
 };
 
 #endif // CHATTHREAD_H

@@ -23,7 +23,7 @@ public:
 private slots:
     void satrtRegister();
     void doRegister();
-    void doReadyRead();
+    void receiveMessage();
 private:
     void initSocket();
     void writeMsg(ChatMsg msg);
@@ -32,5 +32,6 @@ private:
     LoginDialog *loginDlg;
     RegisterDialog *registerDlg;
     QTcpSocket *socket;
+    QString userid;
 };
 #endif // WIDGET_H

@@ -21,14 +21,14 @@ const QString Msgtype = "msgtype";
 const QString Packnum = "packnum";
 const QString Packseq = "packseq";
 
-class subChatMsg
+class ChatMsg
 {
 public:
-    subChatMsg();
-    QJsonObject toJsonObject();
-    subChatMsg(const QJsonObject& jsonobj);
-    subChatMsg(const QString& str);
-    subChatMsg(const QString& _msgid, const QString& _sendid, const QString& _recvid,
+    ChatMsg();
+    QJsonDocument toJsonDocument();
+    ChatMsg(const QJsonObject& jsonobj);
+    ChatMsg(const QString& str);
+    ChatMsg(const QString& _msgid, const QString& _sendid, const QString& _recvid,
                const QString& _sendtime, const QString& _recvtime, const QString& _content,
                MsgType _msgtype, int _packnum, int _packseq);
     bool isLastSub();
@@ -43,26 +43,4 @@ public:
             packseq ; //消息包序号 自1开始
 };
 
-QString initRegisterContent(const QString& name, const QString& pswd,
-                            const QString& key1, const QString&key2);
-
-class ChatMsg
-{
-public:
-    ChatMsg(){}
-    ChatMsg(const subChatMsg& scmsg);
-    ChatMsg(const QList<subChatMsg>& scmsgs);
-    void addSubChatMsg(const subChatMsg& scmsg);
-    QList<QJsonDocument> toJsonDocument();
-    void setSubContent(const QString& content, int subat);
-
-    QString msgid   ,         //消息id
-            sendid  ,        //发送id
-            recvid  ,        //接收id
-            sendtime,      //发送时间
-            recvtime;      //接收时间
-    MsgType msgtype ;//消息类型
-private:
-    QList<subChatMsg> subpacks;
-};
 #endif // CHATMSG_H

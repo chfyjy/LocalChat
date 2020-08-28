@@ -37,8 +37,8 @@ QString fourNumberString(int num)
 }
 
 RegisterInfo::RegisterInfo(const QString& name, const QString& pwd,
-             const QString& k1,const QString& k2)
-    :uname(name), pswd(pwd), key1(k1), key2(k2)
+             const QString& k1,const QString& k2, const QString& uid)
+    :uname(name), pswd(pwd), key1(k1), key2(k2), userid(uid)
 {
 
 }
@@ -48,11 +48,20 @@ QString RegisterInfo::toRegisterStr()
     return uname+ SEPARATOR+pswd+SEPARATOR+key1+SEPARATOR+key2+SEPARATOR;
 }
 
-RegisterInfo::RegisterInfo(const QString& registerStr)
+RegisterInfo::RegisterInfo(const QString& registerStr, const QString& uid)
 {
     QStringList strlist = registerStr.split(SEPARATOR);
     uname = strlist[0];
     pswd = strlist[1];
     key1 = strlist[2];
     key2 = strlist[3];
+    userid = uid;
+}
+
+QString RegisterInfo::toRegisterSQL()
+{
+    return  QString("insert into userLogin "
+            "(userid, nickName, userpswd, pswdkey1, pswdkey2) "
+            "values('%1','%2','%3','%4','%5')")
+            .arg(userid).arg(uname).arg(pswd).arg(key1).arg(key2);
 }

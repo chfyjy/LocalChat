@@ -22,7 +22,7 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::doReadyRead()
+void Widget::receiveMessage()
 {
     qDebug() << socket->readAll();
     qDebug() << "";
@@ -30,18 +30,14 @@ void Widget::doReadyRead()
 
 void Widget::writeMsg(ChatMsg msg)
 {
-    QList<QJsonDocument> doclist = msg.toJsonDocument();
-    int count = doclist.count();
-    if(count < 1)
-        return;
-    for(int i = 0; i <  count; i++)
-        socket->write(doclist[i].toJson());
+    qDebug() << msg.toJsonDocument().toJson();
+    socket->write(msg.toJsonDocument().toJson());
 }
 
 void Widget::initSocket()
 {
     socket = new QTcpSocket(nullptr);
-    qDebug() << connect(socket, &QIODevice::readyRead, this, &Widget::doReadyRead, Qt::ConnectionType::AutoConnection);
+    qDebug() << connect(socket, &QIODevice::readyRead, this, &Widget::receiveMessage, Qt::ConnectionType::AutoConnection);
     socket->connectToHost("127.0.0.1", ServerPort, QIODevice::ReadWrite, QAbstractSocket::IPv4Protocol);
     qDebug() << socket->waitForConnected();
 }
@@ -54,9 +50,8 @@ void Widget::doRegister()
     qDebug() << registerDlg->key2;
     QString mid = MsgID();
     QString content = RegisterInfo(registerDlg->nickname, registerDlg->pswd, registerDlg->key1, registerDlg->key2).toRegisterStr();
-    ChatMsg registerMsg = ChatMsg(subChatMsg(mid, UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1));
+    ChatMsg registerMsg = ChatMsg(mid, UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1);
     writeMsg(registerMsg);
-    //qDebug() <<  socket->write(registerMsg.toJsonDocument().toJson());
 }
 
 void Widget::satrtRegister()
