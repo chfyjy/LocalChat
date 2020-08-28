@@ -23,7 +23,9 @@ QString zeroString(int length)
     case 2: return "00";
     case 3: return "000";
     }
+    return "";
 }
+
 
 QString fourNumberString(int num)
 {
@@ -38,10 +40,7 @@ QString fourNumberString(int num)
 
 RegisterInfo::RegisterInfo(const QString& name, const QString& pwd,
              const QString& k1,const QString& k2, const QString& uid)
-    :uname(name), pswd(pwd), key1(k1), key2(k2), userid(uid)
-{
-
-}
+    :uname(name), pswd(pwd), key1(k1), key2(k2), userid(uid){}
 
 QString RegisterInfo::toRegisterStr()
 {
@@ -64,4 +63,26 @@ QString RegisterInfo::toRegisterSQL()
             "(userid, nickName, userpswd, pswdkey1, pswdkey2) "
             "values('%1','%2','%3','%4','%5')")
             .arg(userid).arg(uname).arg(pswd).arg(key1).arg(key2);
+}
+
+LoginInfo::LoginInfo(const QString&uid, const QString& pwd)
+           :userid(uid), pswd(pwd){}
+
+LoginInfo::LoginInfo(const QString& loginStr)
+{
+    QStringList strlist = loginStr.split(SEPARATOR);
+    userid = strlist[0];
+    pswd = strlist[1];
+}
+
+QString LoginInfo::toLoginStr()
+{
+    return  userid+SEPARATOR+pswd+SEPARATOR;
+}
+
+QString LoginInfo::toLoginSQL()
+{
+    return QString("select count(userid) from userLogin "
+                   "where userid='%1' and userpswd='%2'")
+            .arg(userid).arg(pswd);
 }

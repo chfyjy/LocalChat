@@ -18,7 +18,8 @@ private slots:
 private:
     void MessageHandling(ChatMsg msg);
 
-    bool doRegister(ChatMsg);
+    void doRegister(ChatMsg);
+    void doLogin(ChatMsg);
 
     int Msgat(const QString& msgid);
     void writeMsg(ChatMsg msg);

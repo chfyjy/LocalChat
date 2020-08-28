@@ -27,16 +27,29 @@ private:
             key2;
 };
 
+class LoginInfo
+{
+public:
+    QString userid;
+    LoginInfo(const QString&uid, const QString& pwd);
+    LoginInfo(const QString& loginStr);
+    QString toLoginStr();
+    QString toLoginSQL();
+private:
+    QString pswd;
+};
+
 enum MsgType
 {
     REGISTER,//注册
+    LOGIN,//登录
     FINDPSWD,//找回密码
     USERINFO,//用户信息修改
     TEXTMSG ,//文本消息
-    FILEMSG ,//文件消息
     FRIENDA ,//添加好友
     FRIENDF ,//查找好友
     FRIENDD ,//删除好友
+    TEXTMSGG,//群消息
     GROUPA  ,//加入群聊
     GROUPC  ,//创建群聊
     GROUPE  ,//退出群聊

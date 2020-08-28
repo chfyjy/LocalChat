@@ -28,5 +28,7 @@ void LoginDialog::doRegisterDone()
 
 void LoginDialog::on_LoginPBtn_clicked()
 {
-
+    uid = ui->AccountCbBox->currentText();
+    pswd = ui->PswdLEdit->text();
+    emit needLogin();
 }

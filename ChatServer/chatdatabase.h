@@ -20,6 +20,7 @@ public:
     void close();
     bool createTables();
     QString lastErrorString();
+    int getCount(const QString& countQuerySql);
     int getUserCount();
     int getGroupCount();
     bool registerAccount(const QString& registerSQL);
@@ -27,7 +28,6 @@ public:
 
 signals:
 private:
-    int getCount(const QString& countQuerySql);
     bool execSQL(const QString&);
 
 private:

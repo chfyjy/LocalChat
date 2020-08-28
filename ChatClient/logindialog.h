@@ -12,6 +12,7 @@ class LoginDialog : public QDialog
     Q_OBJECT
 
 public:
+    QString uid, pswd;
     explicit LoginDialog(QWidget *parent = nullptr);
     ~LoginDialog();
     void doRegisterDone();
@@ -25,7 +26,6 @@ signals:
     void needLogin();
 private:
     Ui::LoginDialog *ui;
-    QString uid, pswd;
 };
 
 #endif // LOGINDIALOG_H

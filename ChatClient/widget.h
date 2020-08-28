@@ -22,12 +22,15 @@ public:
 private slots:
     void satrtRegister();
     void doRegister();
+    void doLogin();
     void receiveMessage();
 private:
     void initSocket();
     void writeMsg(ChatMsg msg);
+
     void MessageHandling(ChatMsg msg);
     void registerHandle(ChatMsg msg);
+    void loginHandle(ChatMsg msg);
 private:
     Ui::Widget *ui;
     LoginDialog *loginDlg;

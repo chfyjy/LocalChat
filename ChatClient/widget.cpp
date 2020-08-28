@@ -10,7 +10,7 @@ Widget::Widget(QWidget *parent)
     initSocket();
     loginDlg = new LoginDialog(this);
     qDebug() << connect(loginDlg, &LoginDialog::needRegister, this, &Widget::satrtRegister);
-    qDebug() << connect(loginDlg, &LoginDialog::needLogin, this, &Widget::satrtRegister);
+    qDebug() << connect(loginDlg, &LoginDialog::needLogin, this, &Widget::doLogin);
     loginDlg->exec();
 }
 
@@ -41,19 +41,31 @@ void Widget::registerHandle(ChatMsg msg)
     QMessageBox::information(this, "register", msg.content);
     loginDlg->doRegisterDone();
 }
+void Widget::loginHandle(ChatMsg msg)
+{
+    if(msg.ok == true)
+    {
+        loginDlg->deleteLater();
+        userid = msg.recvid;
+        ui->UIDlabel->setText(userid);
+    }
+    else
+        QMessageBox::information(this, "login", msg.content);
+}
 
 void Widget::MessageHandling(ChatMsg msg)
 {
     switch (msg.msgtype)
     {
     case MsgType::REGISTER:registerHandle(msg);break;
+    case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:break;
     case MsgType::USERINFO:break;
     case MsgType::TEXTMSG :break;
-    case MsgType::FILEMSG :break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
+    case MsgType::TEXTMSGG:break;
     case MsgType::GROUPA  :break;
     case MsgType::GROUPC  :break;
     case MsgType::GROUPE  :break;
@@ -78,11 +90,18 @@ void Widget::initSocket()
 
 void Widget::doRegister()
 {
-    QString mid = MsgID();
     QString content = RegisterInfo(registerDlg->nickname, registerDlg->pswd, registerDlg->key1, registerDlg->key2).toRegisterStr();
-    ChatMsg registerMsg = ChatMsg(mid, UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1);
+    ChatMsg registerMsg = ChatMsg(MsgID(), UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::REGISTER, 1, 1);
     registerMsg.ok = false;
     writeMsg(registerMsg);
+}
+
+void Widget::doLogin()
+{
+    QString content = LoginInfo(loginDlg->uid, loginDlg->pswd).toLoginStr();
+    ChatMsg loginMsg = ChatMsg(MsgID(), UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::LOGIN, 1, 1);
+    loginMsg.ok = false;
+    writeMsg(loginMsg);
 }
 
 void Widget::satrtRegister()
