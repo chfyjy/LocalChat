@@ -13,3 +13,18 @@ DataCard::~DataCard()
 {
     delete ui;
 }
+
+void DataCard::on_ChangePBtn_clicked()
+{
+
+}
+
+void DataCard::on_SavePBtn_clicked()
+{
+
+}
+
+void DataCard::on_closePBtn_clicked()
+{
+
+}

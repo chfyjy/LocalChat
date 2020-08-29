@@ -12,7 +12,8 @@ Widget::Widget(QWidget *parent)
     qDebug() << connect(loginDlg, &LoginDialog::needRegister, this, &Widget::satrtRegister);
     qDebug() << connect(loginDlg, &LoginDialog::needLogin, this, &Widget::doLogin);
     qDebug() << connect(loginDlg, &LoginDialog::needFindPswd, this, &Widget::startFindPswd);
-    loginDlg->exec();
+    if(loginDlg->exec()!=QDialog::Accepted)
+        exit(0);
 }
 
 Widget::~Widget()
@@ -67,7 +68,8 @@ void Widget::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:registerHandle(msg);break;
     case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:findPswdHandle(msg);break;
-    case MsgType::USERINFO:break;
+    case MsgType::USERINF :break;
+    case MsgType::USERINFC:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;

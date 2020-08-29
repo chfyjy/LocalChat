@@ -42,12 +42,12 @@ void ServerSocket::doRegister(ChatMsg msg)
     {
         if(chatdb->registerAccount(RegisterInfo(msg.content, account).toRegisterSQL()))
         {
-            msg.ok = false;
+            msg.ok = true;
             msg.content ="注册成功,您的id是"+account+",请使用它和注册时的密码登录";
         }
         else
         {
-            msg.ok = true;
+            msg.ok = false;
             msg.content ="注册失败:"+chatdb->lastErrorString();
         }
     }
@@ -110,7 +110,8 @@ void ServerSocket::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:doRegister(msg);break;
     case MsgType::LOGIN   :doLogin(msg);break;
     case MsgType::FINDPSWD:doFindPswd(msg);break;
-    case MsgType::USERINFO:break;
+    case MsgType::USERINF :break;
+    case MsgType::USERINFC:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
