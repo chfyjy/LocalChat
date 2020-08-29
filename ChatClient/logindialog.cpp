@@ -7,6 +7,7 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui(new Ui::LoginDialog)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 }
 
 LoginDialog::~LoginDialog()
@@ -31,4 +32,9 @@ void LoginDialog::on_LoginPBtn_clicked()
     uid = ui->AccountCbBox->currentText();
     pswd = ui->PswdLEdit->text();
     emit needLogin();
+}
+
+void LoginDialog::on_FindPswdPBtn_clicked()
+{
+    emit needFindPswd();
 }

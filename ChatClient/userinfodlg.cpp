@@ -6,6 +6,7 @@ UserInfoDlg::UserInfoDlg(QWidget *parent) :
     ui(new Ui::UserInfoDlg)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 }
 
 UserInfoDlg::~UserInfoDlg()

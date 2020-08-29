@@ -39,6 +39,18 @@ private:
     QString pswd;
 };
 
+class FindPSWDInfo
+{
+public:
+    QString userid;
+    QString key;
+    FindPSWDInfo(const QString& uid, const QString& k);
+    FindPSWDInfo(const QString& findRequestStr);
+    QString toFindRequestStr();
+    QString toCheckKeySQL();
+    QString toQueryPswdSQL();
+};
+
 enum MsgType
 {
     REGISTER,//注册

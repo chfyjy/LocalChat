@@ -11,6 +11,7 @@ Widget::Widget(QWidget *parent)
     loginDlg = new LoginDialog(this);
     qDebug() << connect(loginDlg, &LoginDialog::needRegister, this, &Widget::satrtRegister);
     qDebug() << connect(loginDlg, &LoginDialog::needLogin, this, &Widget::doLogin);
+    qDebug() << connect(loginDlg, &LoginDialog::needFindPswd, this, &Widget::startFindPswd);
     loginDlg->exec();
 }
 
@@ -53,13 +54,22 @@ void Widget::loginHandle(ChatMsg msg)
         QMessageBox::information(this, "login", msg.content);
 }
 
+void Widget::findPswdHandle(ChatMsg msg)
+{
+    findpswdDlg->deleteLater();
+    if(msg.ok == true)
+        QMessageBox::information(this, "find the password", "你的密码是:" + msg.content);
+    else
+        QMessageBox::information(this, "find the password", msg.content);
+}
+
 void Widget::MessageHandling(ChatMsg msg)
 {
     switch (msg.msgtype)
     {
     case MsgType::REGISTER:registerHandle(msg);break;
     case MsgType::LOGIN   :loginHandle(msg);break;
-    case MsgType::FINDPSWD:break;
+    case MsgType::FINDPSWD:findPswdHandle(msg);break;
     case MsgType::USERINFO:break;
     case MsgType::TEXTMSG :break;
     case MsgType::FRIENDA :break;
@@ -109,4 +119,19 @@ void Widget::satrtRegister()
     registerDlg = new RegisterDialog(this);
     qDebug() << connect(registerDlg, &RegisterDialog::canRegister, this, &Widget::doRegister);
     registerDlg->exec();
+}
+
+void Widget::startFindPswd()
+{
+    findpswdDlg = new FindPswdDlg(this);
+    qDebug() << connect(findpswdDlg, &FindPswdDlg::couldFindPswd, this, &Widget::doFindPswd);
+    findpswdDlg->exec();
+}
+
+void Widget::doFindPswd()
+{
+    QString content = FindPSWDInfo(findpswdDlg->uid, findpswdDlg->key).toFindRequestStr();
+    ChatMsg findMsg = ChatMsg(MsgID(), UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::FINDPSWD, 1, 1);
+    findMsg.ok = false;
+    writeMsg(findMsg);
 }

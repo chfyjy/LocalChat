@@ -2,9 +2,11 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QTcpSocket>
+
 #include <logindialog.h>
 #include <registerdialog.h>
-#include <QTcpSocket>
+#include <findpswddlg.h>
 #include "../common/chatmsg.h"
 #include "../common/ChatCtrl.h"
 
@@ -21,6 +23,8 @@ public:
     ~Widget();
 private slots:
     void satrtRegister();
+    void startFindPswd();
+    void doFindPswd();
     void doRegister();
     void doLogin();
     void receiveMessage();
@@ -31,8 +35,10 @@ private:
     void MessageHandling(ChatMsg msg);
     void registerHandle(ChatMsg msg);
     void loginHandle(ChatMsg msg);
+    void findPswdHandle(ChatMsg msg);
 private:
     Ui::Widget *ui;
+    FindPswdDlg *findpswdDlg;
     LoginDialog *loginDlg;
     RegisterDialog *registerDlg;
     QTcpSocket *socket;

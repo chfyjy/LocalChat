@@ -44,6 +44,30 @@ bool ChatDataBase::execSQL(const QString& sqlstr)
     return true;
 }
 
+bool ChatDataBase::execSQL(const QString& querySql, QVariant* result)
+{
+    QSqlQuery query(chatDB);
+    query.exec(querySql);
+    if(query.lastError().type() != QSqlError::ErrorType::NoError)
+    {
+        errString = query.lastError().text();
+        return false;
+    }
+    while (query.next())
+             *result = query.value(0);
+    return true;
+
+}
+
+QString ChatDataBase::getPswd(const QString& queryPswdSql)
+{
+    QString pswd = "";
+    QVariant result;
+    execSQL(queryPswdSql, &result);
+    pswd = result.toString();
+    return  pswd;
+}
+
 bool ChatDataBase::createTables()
 {
     QSqlQuery query(chatDB);
@@ -96,17 +120,11 @@ bool ChatDataBase::registerAccount(const QString& registerSQL)
 
 int ChatDataBase::getCount(const QString& countQuerySql)
 {
-    QSqlQuery query(chatDB);
-    query.exec(countQuerySql);
-    if(query.lastError().type() != QSqlError::ErrorType::NoError)
-    {
-        errString = query.lastError().text();
-        return -1;
-    }
-    while (query.next()) {
-             return query.value(0).toInt();
-         }
-    return -1;
+    int count = -1;
+    QVariant result;
+    execSQL(countQuerySql, &result);
+    count = result.toInt();
+    return count;
 }
 
 int ChatDataBase::getUserCount()

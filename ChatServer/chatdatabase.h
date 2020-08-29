@@ -24,11 +24,13 @@ public:
     int getUserCount();
     int getGroupCount();
     bool registerAccount(const QString& registerSQL);
+    QString getPswd(const QString& queryPswdSql);
 
 
 signals:
 private:
     bool execSQL(const QString&);
+    bool execSQL(const QString&, QVariant* result);
 
 private:
     QSqlDatabase chatDB;

@@ -19,6 +19,8 @@ SOURCES += \
     ../common/ChatCtrl.cpp \
     ../common/chatmsg.cpp \
     chatdlg.cpp \
+    datacard.cpp \
+    findpswddlg.cpp \
     logindialog.cpp \
     main.cpp \
     registerdialog.cpp \
@@ -29,6 +31,8 @@ HEADERS += \
     ../common/ChatCtrl.h \
     ../common/chatmsg.h \
     chatdlg.h \
+    datacard.h \
+    findpswddlg.h \
     logindialog.h \
     registerdialog.h \
     userinfodlg.h \
@@ -36,6 +40,8 @@ HEADERS += \
 
 FORMS += \
     chatdlg.ui \
+    datacard.ui \
+    findpswddlg.ui \
     logindialog.ui \
     registerdialog.ui \
     userinfodlg.ui \

@@ -7,6 +7,7 @@ RegisterDialog::RegisterDialog(QWidget *parent) :
     ui(new Ui::RegisterDialog)
 {
     ui->setupUi(this);
+    this->setAttribute(Qt::WA_DeleteOnClose,true);
 }
 
 RegisterDialog::~RegisterDialog()

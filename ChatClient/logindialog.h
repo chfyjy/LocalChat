@@ -21,9 +21,12 @@ private slots:
     void on_RegisterPBtn_clicked();
     void on_LoginPBtn_clicked();
 
+    void on_FindPswdPBtn_clicked();
+
 signals:
     void needRegister();
     void needLogin();
+    void needFindPswd();
 private:
     Ui::LoginDialog *ui;
 };

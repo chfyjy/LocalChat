@@ -18,7 +18,6 @@ void ServerSocket::receiveMessage()
 {
     QJsonParseError error;
     QJsonDocument jsondoc = QJsonDocument::fromJson(readAll(), &error);
-    //ChatMsg msg = ChatMsg(jsondoc.object());
     MessageHandling(ChatMsg(jsondoc.object()));
 }
 
@@ -54,7 +53,7 @@ void ServerSocket::doRegister(ChatMsg msg)
     }
     qDebug() << msg.content;
     msg.msgid = MsgID();
-    msg.recvid = account;
+    msg.recvid = UnregisteredID;
     qDebug() << msg.recvid;
     msg.sendid = ServerID;
     writeMsg(msg);
@@ -82,13 +81,35 @@ void ServerSocket::doLogin(ChatMsg msg)
     writeMsg(msg);
 }
 
+void ServerSocket::doFindPswd(ChatMsg msg)
+{
+    FindPSWDInfo findinfo = FindPSWDInfo(msg.content);
+    int has = chatdb->getCount(findinfo.toCheckKeySQL());
+    if(has == 1)
+    {
+        msg.ok = true;
+        msg.content = chatdb->getPswd(findinfo.toQueryPswdSQL());
+    }
+    else
+    {
+        msg.ok = false;
+        msg.content = "用户不存在/密保错误，请重试";
+    }
+    qDebug() << msg.content;
+    msg.msgid = MsgID();
+    msg.recvid = UnregisteredID;
+    qDebug() << msg.recvid;
+    msg.sendid = ServerID;
+    writeMsg(msg);
+}
+
 void ServerSocket::MessageHandling(ChatMsg msg)
 {
     switch (msg.msgtype)
     {
     case MsgType::REGISTER:doRegister(msg);break;
     case MsgType::LOGIN   :doLogin(msg);break;
-    case MsgType::FINDPSWD:break;
+    case MsgType::FINDPSWD:doFindPswd(msg);break;
     case MsgType::USERINFO:break;
     case MsgType::TEXTMSG :break;
     case MsgType::FRIENDA :break;

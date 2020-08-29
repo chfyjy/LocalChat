@@ -86,3 +86,35 @@ QString LoginInfo::toLoginSQL()
                    "where userid='%1' and userpswd='%2'")
             .arg(userid).arg(pswd);
 }
+
+FindPSWDInfo::FindPSWDInfo(const QString& uid, const QString& k)
+              :userid(uid), key(k){}
+
+FindPSWDInfo::FindPSWDInfo(const QString& findRequestStr)
+{
+    QStringList strlist = findRequestStr.split(SEPARATOR);
+    userid = strlist[0];
+    key = strlist[1];
+}
+
+QString FindPSWDInfo::toFindRequestStr()
+{
+    return  userid+SEPARATOR+key+SEPARATOR;
+}
+
+QString FindPSWDInfo::toCheckKeySQL()
+{
+    return QString("select count(userid) from userLogin "
+                   "where userid='%1' and (pswdkey1='%2' or pswdkey2 = '%3')")
+            .arg(userid).arg(key).arg(key);
+}
+
+QString FindPSWDInfo::toQueryPswdSQL()
+{
+    return QString("select userpswd from userLogin where userid='%1'").arg(userid);
+}
+
+
+
+
+
