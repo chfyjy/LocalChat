@@ -57,10 +57,10 @@ enum MsgType
     LOGIN,//登录
     FINDPSWD,//找回密码
     USERINFO,//用户信息修改
-    TEXTMSG ,//文本消息
     FRIENDA ,//添加好友
     FRIENDF ,//查找好友
     FRIENDD ,//删除好友
+    TEXTMSG ,//文本消息
     TEXTMSGG,//群消息
     GROUPA  ,//加入群聊
     GROUPC  ,//创建群聊

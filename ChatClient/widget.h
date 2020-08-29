@@ -28,6 +28,8 @@ private slots:
     void doRegister();
     void doLogin();
     void receiveMessage();
+    void on_ChangeInfoPBtn_clicked();
+
 private:
     void initSocket();
     void writeMsg(ChatMsg msg);

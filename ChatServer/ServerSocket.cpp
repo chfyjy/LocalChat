@@ -88,7 +88,7 @@ void ServerSocket::doFindPswd(ChatMsg msg)
     if(has == 1)
     {
         msg.ok = true;
-        msg.content = chatdb->getPswd(findinfo.toQueryPswdSQL());
+        msg.content = "你的密码是" + chatdb->getPswd(findinfo.toQueryPswdSQL());
     }
     else
     {
@@ -111,10 +111,10 @@ void ServerSocket::MessageHandling(ChatMsg msg)
     case MsgType::LOGIN   :doLogin(msg);break;
     case MsgType::FINDPSWD:doFindPswd(msg);break;
     case MsgType::USERINFO:break;
-    case MsgType::TEXTMSG :break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
+    case MsgType::TEXTMSG :break;
     case MsgType::TEXTMSGG:break;
     case MsgType::GROUPA  :break;
     case MsgType::GROUPC  :break;

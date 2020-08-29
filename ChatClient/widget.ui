@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>334</width>
     <height>600</height>
    </rect>
   </property>
@@ -73,7 +73,7 @@
      <item>
       <widget class="QPushButton" name="ChangeInfoPBtn">
        <property name="text">
-        <string>修改资料</string>
+        <string>资料卡 </string>
        </property>
       </widget>
      </item>

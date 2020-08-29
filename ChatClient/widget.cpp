@@ -57,10 +57,7 @@ void Widget::loginHandle(ChatMsg msg)
 void Widget::findPswdHandle(ChatMsg msg)
 {
     findpswdDlg->deleteLater();
-    if(msg.ok == true)
-        QMessageBox::information(this, "find the password", "你的密码是:" + msg.content);
-    else
-        QMessageBox::information(this, "find the password", msg.content);
+    QMessageBox::information(this, "find the password", msg.content);
 }
 
 void Widget::MessageHandling(ChatMsg msg)
@@ -71,10 +68,10 @@ void Widget::MessageHandling(ChatMsg msg)
     case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:findPswdHandle(msg);break;
     case MsgType::USERINFO:break;
-    case MsgType::TEXTMSG :break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
+    case MsgType::TEXTMSG :break;
     case MsgType::TEXTMSGG:break;
     case MsgType::GROUPA  :break;
     case MsgType::GROUPC  :break;
@@ -134,4 +131,9 @@ void Widget::doFindPswd()
     ChatMsg findMsg = ChatMsg(MsgID(), UnregisteredID, ServerID, Send_RecvTime(), "", content, MsgType::FINDPSWD, 1, 1);
     findMsg.ok = false;
     writeMsg(findMsg);
+}
+
+void Widget::on_ChangeInfoPBtn_clicked()
+{
+
 }
