@@ -40,8 +40,8 @@ public:
             recvtime,//接收时间
             content ;//消息内容
     MsgType msgtype ;//消息类型
-    int     packnum , //消息分包数 大于1
-            packseq ; //消息包序号 自1开始
+    int     packnum , //消息分包数 自1开始
+            packseq ; //消息包序号 自1开始 小于等于packnum
     bool ok;
 };
 
