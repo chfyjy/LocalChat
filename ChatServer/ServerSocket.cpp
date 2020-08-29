@@ -67,15 +67,17 @@ void ServerSocket::doLogin(ChatMsg msg)
     {
         msg.ok = true;
         msg.content="登录成功";
+        userid = logininfo.userid;
+        msg.recvid = userid;
     }
     else
     {
         msg.ok = false;
         msg.content = "用户不存在/密码错误，请重试";
+        msg.recvid = UnregisteredID;
     }
     qDebug() << msg.content;
     msg.msgid = MsgID();
-    msg.recvid = logininfo.userid;
     qDebug() << msg.recvid;
     msg.sendid = ServerID;
     writeMsg(msg);
@@ -103,6 +105,35 @@ void ServerSocket::doFindPswd(ChatMsg msg)
     writeMsg(msg);
 }
 
+void ServerSocket::doUserInfoGet(ChatMsg msg)
+{
+    qDebug() << "doUserInfoGet";
+    if(!isMsgSendSrc(msg.sendid))
+        return;
+    qDebug() << "doUserInfoGet";
+    UserInfo uinfo(msg.sendid);
+    int has = chatdb->getCount(uinfo.toQueryInfoHasSql());
+    if(has == 1)
+    {
+        uinfo = chatdb->getUserInfo(uinfo.toQueryInfoSql());
+        msg.content = uinfo.userInfoStr();
+    }
+    else
+        msg.content = "";
+    qDebug() << msg.content;
+    msg.msgid = MsgID();
+    msg.recvid = userid;
+    qDebug() << msg.recvid;
+    msg.sendid = ServerID;
+    msg.ok = true;
+    writeMsg(msg);
+}
+
+bool ServerSocket::isMsgSendSrc(const QString& sendid)
+{
+    return (sendid == userid);
+}
+
 void ServerSocket::MessageHandling(ChatMsg msg)
 {
     switch (msg.msgtype)
@@ -110,7 +141,7 @@ void ServerSocket::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:doRegister(msg);break;
     case MsgType::LOGIN   :doLogin(msg);break;
     case MsgType::FINDPSWD:doFindPswd(msg);break;
-    case MsgType::USERINFG:break;
+    case MsgType::USERINFG:doUserInfoGet(msg);break;
     case MsgType::USERINFP:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;

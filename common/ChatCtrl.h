@@ -54,6 +54,7 @@ public:
 class UserInfo
 {
 public:
+    UserInfo(){}
     QString birthday, address, phonenum,userid;
     bool gender;
     int age;
@@ -63,6 +64,7 @@ public:
     QString toQueryInfoSql();
     QString toQueryInfoHasSql();
     QString userInfoStr();
+    bool inited;
 };
 
 enum MsgType

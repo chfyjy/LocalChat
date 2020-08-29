@@ -21,9 +21,13 @@ private:
     void doRegister(ChatMsg);
     void doLogin(ChatMsg);
     void doFindPswd(ChatMsg);
+    void doUserInfoGet(ChatMsg);
 
     int Msgat(const QString& msgid);
     void writeMsg(ChatMsg msg);
+
+    bool isMsgSendSrc(const QString& sendid);
+
 private:
     ChatDataBase *chatdb;
 };

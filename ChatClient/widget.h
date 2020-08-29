@@ -7,6 +7,8 @@
 #include <logindialog.h>
 #include <registerdialog.h>
 #include <findpswddlg.h>
+#include <userinfodlg.h>
+
 #include "../common/chatmsg.h"
 #include "../common/ChatCtrl.h"
 
@@ -38,11 +40,14 @@ private:
     void registerHandle(ChatMsg msg);
     void loginHandle(ChatMsg msg);
     void findPswdHandle(ChatMsg msg);
+    void userInfoGetHandle(ChatMsg msg);
 private:
     Ui::Widget *ui;
     FindPswdDlg *findpswdDlg;
     LoginDialog *loginDlg;
     RegisterDialog *registerDlg;
+    UserInfoDlg *userinfoDlg;
+
     QTcpSocket *socket;
     QString userid;
 };

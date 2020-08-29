@@ -117,15 +117,30 @@ QString FindPSWDInfo::toQueryPswdSQL()
 
 
 
-UserInfo::UserInfo(const QString& uid):userid(uid){}
+UserInfo::UserInfo(const QString& uid):userid(uid)
+{
+    inited = false;
+}
 
 UserInfo::UserInfo(const QString& uid, const QString&addr, const QString& birth, const QString&pnum, bool g, int a)
-:userid(uid),address(addr),birthday(birth),phonenum(pnum), gender(g), age(a){}
+:userid(uid),address(addr),birthday(birth),phonenum(pnum), gender(g), age(a)
+{
+    inited = true;
+}
 
 UserInfo::UserInfo(const QString& uid, const QString& userInfoStr)
     :userid(uid)
 {
     QStringList strlist = userInfoStr.split(SEPARATOR);
+    if(strlist[0] == "true")
+        gender = true;
+    else
+        gender = false;
+    age = strlist[1].toInt();
+    birthday = strlist[2];
+    address = strlist[3];
+    phonenum = strlist[4];
+    inited = true;
 }
 QString UserInfo::toQueryInfoSql()
 {

@@ -84,7 +84,7 @@ bool ChatDataBase::createTables()
         return false;
     if(!execSQL("create table if not exists userInfo"//用户信息表
                 "(uid varchar(5) references userLogin(userid),"//账号
-                "gender bool,"//性别
+                "gender bool,"//性别 true 男 false 女
                 "age int,"//年龄
                 "birthday varchar(8),"//生日
                 "address varchar(50),"//地址
@@ -112,7 +112,26 @@ bool ChatDataBase::createTables()
         return false;
     return true;
 }
-
+UserInfo ChatDataBase::getUserInfo(const QString& sql)
+{
+    UserInfo ret = UserInfo("");
+    QSqlQuery query(chatDB);
+    query.exec(sql);
+    if(query.lastError().type() != QSqlError::ErrorType::NoError)
+        errString = query.lastError().text();
+    else
+    {
+        while (query.next())
+        {
+            ret.gender =  query.value(0).toBool();
+            ret.age = query.value(1).toInt();
+            ret.birthday = query.value(2).toString();
+            ret.address = query.value(3).toString();
+            ret.phonenum = query.value(4).toString();
+        }
+    }
+    return ret;
+}
 bool ChatDataBase::registerAccount(const QString& registerSQL)
 {
     return execSQL(registerSQL);

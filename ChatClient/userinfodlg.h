@@ -2,6 +2,7 @@
 #define USERINFODLG_H
 
 #include <QDialog>
+#include "../common/ChatCtrl.h"
 
 namespace Ui {
 class UserInfoDlg;
@@ -13,6 +14,7 @@ class UserInfoDlg : public QDialog
 
 public:
     explicit UserInfoDlg(QWidget *parent = nullptr);
+    explicit UserInfoDlg(UserInfo uinfo, QWidget *parent = nullptr);
     ~UserInfoDlg();
 
 private:

@@ -23,9 +23,9 @@ public:
     int getCount(const QString& countQuerySql);
     int getUserCount();
     int getGroupCount();
-    bool registerAccount(const QString& registerSQL);
-    QString getPswd(const QString& queryPswdSql);
-
+    bool registerAccount(const QString& sql);
+    QString getPswd(const QString& sql);
+    UserInfo getUserInfo(const QString& sql);
 
 signals:
 private:

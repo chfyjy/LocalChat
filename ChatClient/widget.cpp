@@ -38,7 +38,7 @@ void Widget::receiveMessage()
 void Widget::registerHandle(ChatMsg msg)
 {
     registerDlg->deleteLater();
-    if(msg.ok != true)
+    if(!msg.ok)
         return;
     QMessageBox::information(this, "register", msg.content);
     loginDlg->doRegisterDone();
@@ -46,8 +46,10 @@ void Widget::registerHandle(ChatMsg msg)
 
 void Widget::loginHandle(ChatMsg msg)
 {
-    if(msg.ok == true)
+    if(msg.ok)
     {
+        qDebug() << msg.content;
+        loginDlg->accept();
         loginDlg->deleteLater();
         userid = msg.recvid;
         ui->UIDlabel->setText(userid);
@@ -62,6 +64,26 @@ void Widget::findPswdHandle(ChatMsg msg)
     QMessageBox::information(this, "find the password", msg.content);
 }
 
+void Widget::userInfoGetHandle(ChatMsg msg)
+{
+    qDebug() << "userInfoGetHandle";
+    if(!msg.ok)
+    {
+        QMessageBox::information(this, "User information get", "信息获取失败");
+        return;
+    }
+    if(msg.content == "" )
+    {
+        userinfoDlg = new UserInfoDlg(this);
+        userinfoDlg->exec();
+    }
+    else
+    {
+        userinfoDlg = new UserInfoDlg(UserInfo(msg.recvid, msg.content), this);
+        userinfoDlg->exec();
+    }
+}
+
 void Widget::MessageHandling(ChatMsg msg)
 {
     switch (msg.msgtype)
@@ -69,7 +91,7 @@ void Widget::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:registerHandle(msg);break;
     case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:findPswdHandle(msg);break;
-    case MsgType::USERINFG:break;
+    case MsgType::USERINFG:userInfoGetHandle(msg);break;
     case MsgType::USERINFP:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
@@ -138,7 +160,7 @@ void Widget::doFindPswd()
 
 void Widget::on_ChangeInfoPBtn_clicked()
 {
-    ChatMsg findMsg = ChatMsg(MsgID(), userid, ServerID, Send_RecvTime(), "", "", MsgType::USERINFG, 1, 1);
-    findMsg.ok = false;
-    writeMsg(findMsg);
+    ChatMsg userinfoGetMsg = ChatMsg(MsgID(), userid, ServerID, Send_RecvTime(), "", "", MsgType::USERINFG, 1, 1);
+    userinfoGetMsg.ok = false;
+    writeMsg(userinfoGetMsg);
 }
