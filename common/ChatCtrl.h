@@ -53,7 +53,16 @@ public:
 
 class UserInfo
 {
-
+public:
+    QString birthday, address, phonenum,userid;
+    bool gender;
+    int age;
+    UserInfo(const QString& uid);
+    UserInfo(const QString& uid, const QString&addr, const QString& birth, const QString&pnum, bool g, int a);
+    UserInfo(const QString& uid, const QString& userInfoStr);
+    QString toQueryInfoSql();
+    QString toQueryInfoHasSql();
+    QString userInfoStr();
 };
 
 enum MsgType
@@ -61,8 +70,8 @@ enum MsgType
     REGISTER,//注册
     LOGIN,//登录
     FINDPSWD,//找回密码
-    USERINF ,//用户信息
-    USERINFC,//用户信息修改
+    USERINFG,//获取用户信息
+    USERINFP,//(修改后)提交用户信息
     FRIENDA ,//添加好友
     FRIENDF ,//查找好友
     FRIENDD ,//删除好友

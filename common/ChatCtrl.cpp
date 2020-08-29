@@ -18,7 +18,8 @@ QString Send_RecvTime()
 
 QString zeroString(int length)
 {
-    switch (length) {
+    switch (length)
+    {
     case 1: return "0";
     case 2: return "00";
     case 3: return "000";
@@ -116,5 +117,32 @@ QString FindPSWDInfo::toQueryPswdSQL()
 
 
 
+UserInfo::UserInfo(const QString& uid):userid(uid){}
+
+UserInfo::UserInfo(const QString& uid, const QString&addr, const QString& birth, const QString&pnum, bool g, int a)
+:userid(uid),address(addr),birthday(birth),phonenum(pnum), gender(g), age(a){}
+
+UserInfo::UserInfo(const QString& uid, const QString& userInfoStr)
+    :userid(uid)
+{
+    QStringList strlist = userInfoStr.split(SEPARATOR);
+}
+QString UserInfo::toQueryInfoSql()
+{
+    return QString("select gender, age, birthday, address, phonenumber from userInfo where uid='%1'").arg(userid);
+}
+
+QString UserInfo::toQueryInfoHasSql()
+{
+    return QString("select count(uid) from userInfo where uid='%1'").arg(userid);
+}
+
+QString UserInfo::userInfoStr()
+{
+    return QString("%1%2%3%4%5%6%7%8%9%10")
+            .arg(gender).arg(SEPARATOR).arg(age).arg(SEPARATOR)
+            .arg(birthday).arg(SEPARATOR).arg(address).arg(SEPARATOR)
+            .arg(phonenum).arg(SEPARATOR);
+}
 
 

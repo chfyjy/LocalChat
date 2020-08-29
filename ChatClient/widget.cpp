@@ -43,6 +43,7 @@ void Widget::registerHandle(ChatMsg msg)
     QMessageBox::information(this, "register", msg.content);
     loginDlg->doRegisterDone();
 }
+
 void Widget::loginHandle(ChatMsg msg)
 {
     if(msg.ok == true)
@@ -68,8 +69,8 @@ void Widget::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:registerHandle(msg);break;
     case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:findPswdHandle(msg);break;
-    case MsgType::USERINF :break;
-    case MsgType::USERINFC:break;
+    case MsgType::USERINFG:break;
+    case MsgType::USERINFP:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
@@ -137,5 +138,7 @@ void Widget::doFindPswd()
 
 void Widget::on_ChangeInfoPBtn_clicked()
 {
-
+    ChatMsg findMsg = ChatMsg(MsgID(), userid, ServerID, Send_RecvTime(), "", "", MsgType::USERINFG, 1, 1);
+    findMsg.ok = false;
+    writeMsg(findMsg);
 }

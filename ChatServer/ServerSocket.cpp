@@ -110,8 +110,8 @@ void ServerSocket::MessageHandling(ChatMsg msg)
     case MsgType::REGISTER:doRegister(msg);break;
     case MsgType::LOGIN   :doLogin(msg);break;
     case MsgType::FINDPSWD:doFindPswd(msg);break;
-    case MsgType::USERINF :break;
-    case MsgType::USERINFC:break;
+    case MsgType::USERINFG:break;
+    case MsgType::USERINFP:break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
