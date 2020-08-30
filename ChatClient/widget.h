@@ -33,6 +33,16 @@ private slots:
     void putUserInfo();
     void on_ChangeInfoPBtn_clicked();
 
+    void on_AddFriendPBtn_clicked();
+
+    void on_AddGroupPBtn_clicked();
+
+    void on_FriendFindPBtn_clicked();
+
+    void on_GroupFindPBtn_clicked();
+
+    void on_GroupCreatePbtn_clicked();
+
 private:
     void initSocket();
     void writeMsg(ChatMsg msg);
@@ -43,6 +53,9 @@ private:
     void findPswdHandle(ChatMsg msg);
     void userInfoGetHandle(ChatMsg msg);
     void userInfoPutHandle(ChatMsg msg);
+
+    void showFriendOption(bool showopt);
+    void showGroupOption(bool showopt);
 private:
     Ui::Widget *ui;
     FindPswdDlg *findpswdDlg;

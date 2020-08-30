@@ -7,6 +7,8 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    showGroupOption(false);
+    showFriendOption(false);
     initSocket();
     loginDlg = new LoginDialog(this);
     qDebug() << connect(loginDlg, &LoginDialog::needRegister, this, &Widget::satrtRegister);
@@ -173,4 +175,46 @@ void Widget::on_ChangeInfoPBtn_clicked()
     ChatMsg userinfoGetMsg = ChatMsg(MsgID(), userid, ServerID, Send_RecvTime(), "", "", MsgType::USERINFG, 1, 1);
     userinfoGetMsg.ok = false;
     writeMsg(userinfoGetMsg);
+}
+
+void Widget::showFriendOption(bool showopt)
+{
+    ui->FriendInfoLEdit->setHidden(!showopt);
+    ui->FriendFindPBtn->setHidden(!showopt);
+    ui->label->setHidden(!showopt);
+}
+
+void Widget::showGroupOption(bool showopt)
+{
+    ui->label_3->setHidden(!showopt);
+    ui->GroupInfoLEdit->setHidden(!showopt);
+    ui->GroupFindPBtn->setHidden(!showopt);
+    ui->GroupCreatePbtn->setHidden(!showopt);
+}
+
+void Widget::on_AddFriendPBtn_clicked()
+{
+    showFriendOption(true);
+    showGroupOption(false);
+}
+
+void Widget::on_AddGroupPBtn_clicked()
+{
+    showFriendOption(false);
+    showGroupOption(true);
+}
+
+void Widget::on_FriendFindPBtn_clicked()
+{
+    showFriendOption(false);
+}
+
+void Widget::on_GroupFindPBtn_clicked()
+{
+    showGroupOption(false);
+}
+
+void Widget::on_GroupCreatePbtn_clicked()
+{
+    showGroupOption(false);
 }

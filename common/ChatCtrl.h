@@ -67,7 +67,7 @@ public:
     QString userInfoStr();
     bool inited;
 };
-
+//
 enum MsgType
 {
     REGISTER,//注册

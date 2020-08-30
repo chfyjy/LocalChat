@@ -18,8 +18,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     ../common/ChatCtrl.cpp \
     ../common/chatmsg.cpp \
+    MsgItem.cpp \
     chatdlg.cpp \
     findpswddlg.cpp \
+    friendaddrequest.cpp \
     logindialog.cpp \
     main.cpp \
     registerdialog.cpp \
@@ -29,16 +31,20 @@ SOURCES += \
 HEADERS += \
     ../common/ChatCtrl.h \
     ../common/chatmsg.h \
+    MsgItem.h \
     chatdlg.h \
     findpswddlg.h \
+    friendaddrequest.h \
     logindialog.h \
     registerdialog.h \
     userinfodlg.h \
     widget.h
 
 FORMS += \
+    MsgItem.ui \
     chatdlg.ui \
     findpswddlg.ui \
+    friendaddrequestdlg.ui \
     logindialog.ui \
     registerdialog.ui \
     userinfodlg.ui \
