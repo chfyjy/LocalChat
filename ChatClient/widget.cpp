@@ -73,15 +73,25 @@ void Widget::userInfoGetHandle(ChatMsg msg)
         return;
     }
     if(msg.content == "" )
-    {
         userinfoDlg = new UserInfoDlg(this);
-        userinfoDlg->exec();
-    }
     else
-    {
         userinfoDlg = new UserInfoDlg(UserInfo(msg.recvid, msg.content), this);
-        userinfoDlg->exec();
-    }
+    connect(userinfoDlg, &UserInfoDlg::needPutUserInfo, this, &Widget::putUserInfo);
+    userinfoDlg->exec();
+}
+
+void Widget::putUserInfo()
+{
+    QString content=userinfoDlg->uinfo.userInfoStr();
+    ChatMsg userinfoPutMsg = ChatMsg(MsgID(), userid, ServerID, Send_RecvTime(), "", content, MsgType::USERINFP, 1, 1);
+    userinfoPutMsg.ok = false;
+    writeMsg(userinfoPutMsg);
+}
+
+void Widget::userInfoPutHandle(ChatMsg msg)
+{
+    qDebug() << "userInfoPutHandle" << msg.msgtype << msg.content;
+    QMessageBox::information(userinfoDlg, "user info", msg.content);
 }
 
 void Widget::MessageHandling(ChatMsg msg)
@@ -92,7 +102,7 @@ void Widget::MessageHandling(ChatMsg msg)
     case MsgType::LOGIN   :loginHandle(msg);break;
     case MsgType::FINDPSWD:findPswdHandle(msg);break;
     case MsgType::USERINFG:userInfoGetHandle(msg);break;
-    case MsgType::USERINFP:break;
+    case MsgType::USERINFP:userInfoPutHandle(msg);break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;

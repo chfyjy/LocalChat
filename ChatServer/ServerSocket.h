@@ -22,6 +22,7 @@ private:
     void doLogin(ChatMsg);
     void doFindPswd(ChatMsg);
     void doUserInfoGet(ChatMsg);
+    void doUserInfoPut(ChatMsg);
 
     int Msgat(const QString& msgid);
     void writeMsg(ChatMsg msg);

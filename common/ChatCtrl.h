@@ -63,6 +63,7 @@ public:
     UserInfo(const QString& uid, const QString& userInfoStr);
     QString toQueryInfoSql();
     QString toQueryInfoHasSql();
+    QString toReplaceInfoSql();
     QString userInfoStr();
     bool inited;
 };

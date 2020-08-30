@@ -26,11 +26,11 @@ public:
     bool registerAccount(const QString& sql);
     QString getPswd(const QString& sql);
     UserInfo getUserInfo(const QString& sql);
+    bool execSQL(const QString&);
+    bool execSQL(const QString&, QVariant* result);
 
 signals:
 private:
-    bool execSQL(const QString&);
-    bool execSQL(const QString&, QVariant* result);
 
 private:
     QSqlDatabase chatDB;

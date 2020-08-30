@@ -25,6 +25,18 @@
    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1,1,1,1,2">
     <item>
      <widget class="QGroupBox" name="groupBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
       <property name="title">
        <string>性别</string>
       </property>

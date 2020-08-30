@@ -83,7 +83,7 @@ bool ChatDataBase::createTables()
                ")"))
         return false;
     if(!execSQL("create table if not exists userInfo"//用户信息表
-                "(uid varchar(5) references userLogin(userid),"//账号
+                "(uid varchar(4) primary key,"//账号
                 "gender bool,"//性别 true 男 false 女
                 "age int,"//年龄
                 "birthday varchar(8),"//生日

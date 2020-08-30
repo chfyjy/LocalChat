@@ -30,6 +30,7 @@ private slots:
     void doRegister();
     void doLogin();
     void receiveMessage();
+    void putUserInfo();
     void on_ChangeInfoPBtn_clicked();
 
 private:
@@ -41,13 +42,13 @@ private:
     void loginHandle(ChatMsg msg);
     void findPswdHandle(ChatMsg msg);
     void userInfoGetHandle(ChatMsg msg);
+    void userInfoPutHandle(ChatMsg msg);
 private:
     Ui::Widget *ui;
     FindPswdDlg *findpswdDlg;
     LoginDialog *loginDlg;
     RegisterDialog *registerDlg;
     UserInfoDlg *userinfoDlg;
-
     QTcpSocket *socket;
     QString userid;
 };

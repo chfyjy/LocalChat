@@ -132,7 +132,7 @@ UserInfo::UserInfo(const QString& uid, const QString& userInfoStr)
     :userid(uid)
 {
     QStringList strlist = userInfoStr.split(SEPARATOR);
-    if(strlist[0] == "true")
+    if(strlist[0] == "1")
         gender = true;
     else
         gender = false;
@@ -146,10 +146,23 @@ QString UserInfo::toQueryInfoSql()
 {
     return QString("select gender, age, birthday, address, phonenumber from userInfo where uid='%1'").arg(userid);
 }
+/*
+                "(uid varchar(5) references userLogin(userid),"//账号
+                "gender bool,"//性别 true 男 false 女
+                "age int,"//年龄
+                "birthday varchar(8),"//生日
+                "address varchar(50),"//地址
+                "phonenumber varchar(20)"//手机号/电话号
+*/
+QString UserInfo::toReplaceInfoSql()
+{
+    return  QString("replace into userInfo values('%1',%2,%3,'%4','%5','%6');")
+            .arg(userid).arg(gender).arg(age).arg(birthday).arg(address).arg(phonenum);
+}
 
 QString UserInfo::toQueryInfoHasSql()
 {
-    return QString("select count(uid) from userInfo where uid='%1'").arg(userid);
+    return QString("select count(age) from userInfo where uid='%1'").arg(userid);
 }
 
 QString UserInfo::userInfoStr()

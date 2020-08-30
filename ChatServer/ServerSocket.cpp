@@ -119,7 +119,31 @@ void ServerSocket::doUserInfoGet(ChatMsg msg)
         msg.content = uinfo.userInfoStr();
     }
     else
+    {
         msg.content = "";
+    }
+    qDebug() << msg.content;
+    msg.msgid = MsgID();
+    msg.recvid = userid;
+    qDebug() << msg.recvid;
+    msg.sendid = ServerID;
+    msg.ok = true;
+    writeMsg(msg);
+}
+
+void ServerSocket::doUserInfoPut(ChatMsg msg)
+{
+    qDebug() << "doUserInfoPut" << msg.sendid << userid;
+    if(!isMsgSendSrc(msg.sendid))
+        return;
+    qDebug() << "doUserInfoPut";
+    UserInfo uinfo(msg.sendid, msg.content);
+    qDebug() << uinfo.toReplaceInfoSql();
+    bool ok = chatdb->execSQL(uinfo.toReplaceInfoSql());
+    if(ok)
+        msg.content = "资料修改成功";
+    else
+        msg.content = "资料修改失败 "+chatdb->lastErrorString();
     qDebug() << msg.content;
     msg.msgid = MsgID();
     msg.recvid = userid;
@@ -142,7 +166,7 @@ void ServerSocket::MessageHandling(ChatMsg msg)
     case MsgType::LOGIN   :doLogin(msg);break;
     case MsgType::FINDPSWD:doFindPswd(msg);break;
     case MsgType::USERINFG:doUserInfoGet(msg);break;
-    case MsgType::USERINFP:break;
+    case MsgType::USERINFP:doUserInfoPut(msg);break;
     case MsgType::FRIENDA :break;
     case MsgType::FRIENDF :break;
     case MsgType::FRIENDD :break;
